@@ -240,36 +240,75 @@ end
 
 ---
 
-## 📚 API Reference
+## 📚 API Reference (Updated with Options)
 
 ### Validators
 
 - `calid:literal(value, message?)` - Validates a literal value.
+  - **Options:**
+    - `value` (required): The exact value to match.
+    - `message`: Custom error message.
+
 - `calid:boolean(message?)` - Validates a boolean value.
+  - **Options:**
+    - `optional`: Allows the value to be nil.
+    - `nullable`: Explicitly allows nil values.
+    - `default`: Default value if input is nil.
+    - `message`: Custom error message.
+
 - `calid:number(message?)` - Validates a number with options for min, max, positive, negative, and integer-only.
+  - **Options:**
+    - `min`: Minimum value.
+    - `max`: Maximum value.
+    - `int`: Requires an integer.
+    - `positive`: Requires a positive number.
+    - `negative`: Requires a negative number.
+    - `optional`: Allows the value to be nil.
+    - `nullable`: Explicitly allows nil values.
+    - `default`: Default value if input is nil.
+    - `message`: Custom error message.
+
 - `calid:string(message?)` - Validates a string with options for length, regex, email, URL, UUID, and more.
+  - **Options:**
+    - `length`: Exact string length.
+    - `min`: Minimum string length.
+    - `max`: Maximum string length.
+    - `regex`: Lua pattern for validation.
+    - `email`: Requires a valid email format.
+    - `url`: Requires a valid URL format.
+    - `uuid`: Requires a valid UUID format.
+    - `cuid`: Requires a valid CUID format.
+    - `startsWith`: Required prefix.
+    - `endsWith`: Required suffix.
+    - `optional`: Allows the value to be nil.
+    - `nullable`: Explicitly allows nil values.
+    - `default`: Default value if input is nil.
+    - `message`: Custom error message.
+
 - `calid:enum(values, message?)` - Validates that a value is in a specified set.
+  - **Options:**
+    - `enum` (required): Array of allowed values.
+    - `message`: Custom error message.
+
 - `calid:object(fields, messageType?, messageObject?)` - Validates an object with nested fields.
+  - **Options:**
+    - `object` (required): Table of field validators.
+    - `optional`: Allows the value to be nil.
+    - `nullable`: Explicitly allows nil values.
+    - `default`: Default value if input is nil.
+    - `messageType`: Custom error message for type validation.
+    - `messageObject`: Custom error message for field validation.
+
 - `calid:array(itemValidator, messageType?, messageArray?)` - Validates an array of items.
-
-### Options
-
-- `:min(value, message?)` - Sets the minimum value or length.
-- `:max(value, message?)` - Sets the maximum value or length.
-- `:int(message?)` - Requires an integer.
-- `:positive(message?)` - Requires a positive number.
-- `:negative(message?)` - Requires a negative number.
-- `:length(value, message?)` - Requires an exact length.
-- `:startsWith(prefix, message?)` - Requires a string to start with a prefix.
-- `:endsWith(suffix, message?)` - Requires a string to end with a suffix.
-- `:regex(pattern, message?)` - Validates with a regex pattern.
-- `:email(message?)` - Requires a valid email format.
-- `:url(message?)` - Requires a valid URL format.
-- `:uuid(message?)` - Requires a valid UUID format.
-- `:cuid(message?)` - Requires a valid CUID format.
-- `:optional()` - Marks the field as optional.
-- `:nullable()` - Marks the field as nullable.
-- `:default(value)` - Sets a default value.
+  - **Options:**
+    - `array` (required): Validator for array items.
+    - `min`: Minimum number of items.
+    - `max`: Maximum number of items.
+    - `optional`: Allows the value to be nil.
+    - `nullable`: Explicitly allows nil values.
+    - `default`: Default value if input is nil.
+    - `messageType`: Custom error message for type validation.
+    - `messageArray`: Custom error message for item validation.
 
 ---
 
