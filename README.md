@@ -1,24 +1,32 @@
-# Calid - Lua Schema Validation Resource
+# 🔥 Calid - Lua Schema Validation Resource
 
-Calid is a Lua library designed for schema validation. It provides a set of tools to validate data structures, ensuring they meet specific requirements. This library is particularly useful for validating configurations, user inputs, or any structured data in Lua.
+Calid is a **Lua library** designed for **schema validation**. It provides a set of tools to validate data structures, ensuring they meet specific requirements. This library is particularly useful for validating configurations, user inputs, or any structured data in Lua.
 
-## Features
+---
 
-- Validate primitive types like strings, numbers, and booleans.
-- Support for complex types like arrays and objects.
-- Customizable error messages.
-- Built-in support for common patterns like email, URL, and UUID validation.
-- Flexible options for optional, nullable, and default values.
+## 🚀 Features
 
-## Usage
+- ✅ Validate primitive types like **strings**, **numbers**, and **booleans**.
+- 🛠️ Support for **complex types** like arrays and objects.
+- ✨ Customizable **error messages**.
+- 📦 Built-in support for common patterns like **email**, **URL**, and **UUID** validation.
+- 🔄 Flexible options for **optional**, **nullable**, and **default values**.
 
-To enable the library inside of your resource just add @calid/init.lua as a shared_script in your fxmanifest.lua file.
+---
+
+## 📦 Installation
+
+To enable the library inside your resource, add `@calid/init.lua` as a `shared_script` in your `fxmanifest.lua` file:
 
 ```lua
 shared_scripts {
   '@calid/init.lua',
 }
 ```
+
+---
+
+## 🛠️ Usage
 
 ### Basic Example
 
@@ -51,6 +59,8 @@ end
 ### Advanced Example
 
 ```lua
+local calid = require("calid")
+
 -- Custom error messages
 local emailValidator = calid:string():email("Invalid email address")
 local result, err = emailValidator:parse("example@domain.com")
@@ -73,9 +83,11 @@ if not result then
 end
 ```
 
-### Additional Examples for Each Method (with Comments)
+---
 
-#### `calid:literal(value, message?)`
+## 📖 Additional Examples for Each Method
+
+### `calid:literal(value, message?)`
 ```lua
 local literalValidator = calid:literal("fixedValue", "Value must be 'fixedValue'")
 local result, error = literalValidator:parse("fixedValue")
@@ -85,7 +97,7 @@ if not result then
 end
 ```
 
-#### `calid:boolean(message?)`
+### `calid:boolean(message?)`
 ```lua
 local booleanValidator = calid:boolean("Value must be a boolean")
 local result, error = booleanValidator:parse(true)
@@ -95,7 +107,7 @@ if not result then
 end
 ```
 
-#### `calid:number(message?)`
+### `calid:number(message?)`
 ```lua
 local numberValidator = calid:number("Value must be a number"):positive():int()
 local result, error = numberValidator:parse(42)
@@ -105,7 +117,7 @@ if not result then
 end
 ```
 
-#### `calid:string(message?)`
+### `calid:string(message?)`
 ```lua
 local stringValidator = calid:string("Value must be a string"):min(5):max(10)
 local result, error = stringValidator:parse("Hello")
@@ -115,7 +127,7 @@ if not result then
 end
 ```
 
-#### `calid:enum(values, message?)`
+### `calid:enum(values, message?)`
 ```lua
 local enumValidator = calid:enum({ "apple", "banana", "cherry" }, "Value must be one of the specified options")
 local result, error = enumValidator:parse("banana")
@@ -125,7 +137,7 @@ if not result then
 end
 ```
 
-#### `calid:object(fields, messageType?, messageObject?)`
+### `calid:object(fields, messageType?, messageObject?)`
 ```lua
 local objectValidator = calid:object({
     username = calid:string():min(3),
@@ -139,7 +151,7 @@ if not result then
 end
 ```
 
-#### `calid:array(itemValidator, messageType?, messageArray?)`
+### `calid:array(itemValidator, messageType?, messageArray?)`
 ```lua
 local arrayValidator = calid:array(calid:number():positive(), "Invalid array structure")
 local result, error = arrayValidator:parse({ 1, 2, 3, 4 })
@@ -149,9 +161,11 @@ if not result then
 end
 ```
 
-### Error Examples for Each Method
+---
 
-#### `calid:literal(value, message?)`
+## ❌ Error Examples for Each Method
+
+### `calid:literal(value, message?)`
 ```lua
 local literalValidator = calid:literal("fixedValue", "Value must be 'fixedValue'")
 local result, error = literalValidator:parse("wrongValue")
@@ -161,7 +175,7 @@ if not result then
 end
 ```
 
-#### `calid:boolean(message?)`
+### `calid:boolean(message?)`
 ```lua
 local booleanValidator = calid:boolean("Value must be a boolean")
 local result, error = booleanValidator:parse(123)
@@ -171,7 +185,7 @@ if not result then
 end
 ```
 
-#### `calid:number(message?)`
+### `calid:number(message?)`
 ```lua
 local numberValidator = calid:number("Value must be a number"):positive()
 local result, error = numberValidator:parse(-10)
@@ -181,7 +195,7 @@ if not result then
 end
 ```
 
-#### `calid:string(message?)`
+### `calid:string(message?)`
 ```lua
 local stringValidator = calid:string("Value must be a string"):min(5)
 local result, error = stringValidator:parse("Hi")
@@ -191,7 +205,7 @@ if not result then
 end
 ```
 
-#### `calid:enum(values, message?)`
+### `calid:enum(values, message?)`
 ```lua
 local enumValidator = calid:enum({ "apple", "banana", "cherry" }, "Value must be one of the specified options")
 local result, error = enumValidator:parse("orange")
@@ -201,7 +215,7 @@ if not result then
 end
 ```
 
-#### `calid:object(fields, messageType?, messageObject?)`
+### `calid:object(fields, messageType?, messageObject?)`
 ```lua
 local objectValidator = calid:object({
     username = calid:string():min(3),
@@ -214,7 +228,7 @@ if not result then
 end
 ```
 
-#### `calid:array(itemValidator, messageType?, messageArray?)`
+### `calid:array(itemValidator, messageType?, messageArray?)`
 ```lua
 local arrayValidator = calid:array(calid:number():positive(), "Invalid array structure")
 local result, error = arrayValidator:parse({ 1, -2, 3 })
@@ -224,7 +238,9 @@ if not result then
 end
 ```
 
-## API Reference
+---
+
+## 📚 API Reference
 
 ### Validators
 
@@ -255,6 +271,8 @@ end
 - `:nullable()` - Marks the field as nullable.
 - `:default(value)` - Sets a default value.
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 📜 License
+
+This project is licensed under the **MIT License**.
