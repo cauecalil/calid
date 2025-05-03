@@ -51,8 +51,6 @@ end
 ### Advanced Example
 
 ```lua
-local calid = require("calid")
-
 -- Custom error messages
 local emailValidator = calid:string():email("Invalid email address")
 local result, err = emailValidator:parse("example@domain.com")
