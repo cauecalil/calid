@@ -12,5 +12,3 @@ files {
     "init.lua",
     "**/*.lua",
 }
-
-shared_script "init.lua"
