@@ -10,7 +10,7 @@ CalidEnum.__index = CalidEnum ---@private
 
 ---Creates a new CalidEnum schema.
 ---@private
----@alias CalidEnumOptions { required_error?: string, type_error?: string, enum_error?: string }
+---@alias CalidEnumOptions { required_error?: string, enum_error?: string }
 ---@param enum table
 ---@param options? CalidEnumOptions
 ---@return CalidEnum
@@ -26,10 +26,6 @@ function CalidEnum:new(enum, options)
     if options then
         if options.required_error then
             _self.errors:setMessage("required", options.required_error)
-        end
-
-        if options.type_error then
-            _self.errors:setMessage("type", options.type_error)
         end
 
         if options.enum_error then
