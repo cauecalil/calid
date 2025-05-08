@@ -92,9 +92,7 @@ function CalidObject:parse(value)
     end
 
     for key, schema in pairs(self.validation.object) do
-        local val = value and value[key] or nil
-
-        local result = schema:parse(val)
+        local result = schema:parse(value[key])
 
         if not result.success then
             local err = result.error
