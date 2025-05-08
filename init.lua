@@ -21,7 +21,7 @@ package.searchers = {
         return ok and result or ok, result
     end,
     function(module)
-        return package.preload[module] or nil, ("no field package.preload['%s']"):format(module)
+        return package.preload[module], ("no field package.preload['%s']"):format(module)
     end,
     function(module)
         local resource, fileName = "calid", module:gsub("%.", "/")
@@ -55,7 +55,7 @@ _ENV.requireC = function(module)
     loaded[module] = "__loading"
 
     for _, searcher in ipairs(package.searchers) do
-        local result, errMsg = searcher(module)
+        local result = searcher(module)
 
         if result then
             loaded[module] = type(result) == "function" and result() or result or true

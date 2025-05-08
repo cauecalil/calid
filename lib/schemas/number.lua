@@ -1,5 +1,5 @@
 local utils = requireC "lib.utils"
-local CalidErrors = requireC "lib.errors.class"
+local CalidErrors = requireC "lib.errors"
 
 ---@class CalidNumber : CalidSchema
 ---@field type string
