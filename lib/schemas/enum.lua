@@ -1,7 +1,7 @@
 local utils = requireC "lib.utils"
 local CalidErrors = requireC "lib.errors"
 
----@class CalidEnum : CalidSchema
+---@class CalidEnum
 ---@field type string
 ---@field validation table
 ---@field errors CalidErrors
@@ -10,28 +10,34 @@ CalidEnum.__index = CalidEnum ---@private
 
 ---Creates a new CalidEnum schema.
 ---@private
----@alias CalidEnumOptions { required_error?: string, enum_error?: string }
+---@alias CalidEnumOptions { required_error?: string, type_error?: string, enum_error?: string }
 ---@param enum table
 ---@param options? CalidEnumOptions
 ---@return CalidEnum
 function CalidEnum:new(enum, options)
-    local schema = setmetatable({}, CalidEnum)
+    local _self = setmetatable({}, CalidEnum)
 
-    schema.type = "enum"
-    schema.validation = {}
-    schema.validation.enum = enum
+    _self.type = "enum"
+    _self.validation = {}
+    _self.validation.enum = enum
 
-    schema.errors = CalidErrors:new(schema.type)
+    _self.errors = CalidErrors:new(_self.type)
 
-    if options?.required_error then
-        schema.errors:setMessage("required", options?.required_error)
+    if options then
+        if options.required_error then
+            _self.errors:setMessage("required", options.required_error)
+        end
+
+        if options.type_error then
+            _self.errors:setMessage("type", options.type_error)
+        end
+
+        if options.enum_error then
+            _self.errors:setMessage("enum", options.enum_error)
+        end
     end
 
-    if options?.enum_error then
-        schema.errors:setMessage("type", options?.enum_error)
-    end
-
-    return schema
+    return _self
 end
 
 ---Defines a default value.

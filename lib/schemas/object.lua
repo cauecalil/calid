@@ -1,7 +1,7 @@
 local utils = requireC "lib.utils"
 local CalidErrors = requireC "lib.errors"
 
----@class CalidObject : CalidSchema
+---@class CalidObject
 ---@field type string
 ---@field validation table
 ---@field errors CalidErrors
@@ -15,23 +15,25 @@ CalidObject.__index = CalidObject ---@private
 ---@param options? CalidObjectOptions
 ---@return CalidObject
 function CalidObject:new(object, options)
-    local schema = setmetatable({}, CalidObject)
+    local _self = setmetatable({}, CalidObject)
 
-    schema.type = "object"
-    schema.validation = {}
-    schema.validation.object = object
+    _self.type = "object"
+    _self.validation = {}
+    _self.validation.object = object
 
-    schema.errors = CalidErrors:new(schema.type)
+    _self.errors = CalidErrors:new(_self.type)
 
-    if options?.required_error then
-        schema.errors:setMessage("required", options?.required_error)
+    if options then
+        if options.required_error then
+            _self.errors:setMessage("required", options.required_error)
+        end
+
+        if options.type_error then
+            _self.errors:setMessage("type", options.type_error)
+        end
     end
 
-    if options?.type_error then
-        schema.errors:setMessage("type", options?.type_error)
-    end
-
-    return schema
+    return _self
 end
 
 ---Defines a default value.

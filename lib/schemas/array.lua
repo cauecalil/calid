@@ -1,7 +1,7 @@
 local utils = requireC "lib.utils"
 local CalidErrors = requireC "lib.errors"
 
----@class CalidArray : CalidSchema
+---@class CalidArray
 ---@field type string
 ---@field validation table
 ---@field errors CalidErrors
@@ -10,28 +10,31 @@ CalidArray.__index = CalidArray ---@private
 
 ---Creates a new CalidArray schema.
 ---@private
+---@alias CalidArraySchema CalidNumber | CalidString | CalidBoolean | CalidObject | CalidArray | CalidLiteral | CalidEnum
 ---@alias CalidArrayOptions { required_error?: string, type_error?: string }
----@param schema CalidSchema
+---@param schema CalidArraySchema
 ---@param options? CalidArrayOptions
 ---@return CalidArray
 function CalidArray:new(schema, options)
-    local _schema = setmetatable({}, CalidArray)
+    local _self = setmetatable({}, CalidArray)
 
-    _schema.type = "array"
-    _schema.validation = {}
-    _schema.validation.schema = schema
+    _self.type = "array"
+    _self.validation = {}
+    _self.validation.schema = schema
 
-    _schema.errors = CalidErrors:new(_schema.type)
+    _self.errors = CalidErrors:new(_self.type)
 
-    if options?.required_error then
-        _schema.errors:setMessage("required", options?.required_error)
+    if options then
+        if options.required_error then
+            _self.errors:setMessage("required", options.required_error)
+        end
+
+        if options.type_error then
+            _self.errors:setMessage("type", options.type_error)
+        end
     end
 
-    if options?.type_error then
-        _schema.errors:setMessage("type", options?.type_error)
-    end
-
-    return _schema
+    return _self
 end
 
 ---Defines a default value.

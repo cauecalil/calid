@@ -1,7 +1,7 @@
 local utils = requireC "lib.utils"
 local CalidErrors = requireC "lib.errors"
 
----@class CalidLiteral : CalidSchema
+---@class CalidLiteral
 ---@field type string
 ---@field validation table
 ---@field errors CalidErrors
@@ -15,23 +15,25 @@ CalidLiteral.__index = CalidLiteral ---@private
 ---@param options? CalidLiteralOptions
 ---@return CalidLiteral
 function CalidLiteral:new(literal, options)
-    local schema = setmetatable({}, CalidLiteral)
+    local _self = setmetatable({}, CalidLiteral)
 
-    schema.type = "literal"
-    schema.validation = {}
-    schema.validation.literal = literal
+    _self.type = "literal"
+    _self.validation = {}
+    _self.validation.literal = literal
 
-    schema.errors = CalidErrors:new(schema.type)
+    _self.errors = CalidErrors:new(_self.type)
 
-    if options?.required_error then
-        schema.errors:setMessage("required", options?.required_error)
+    if options then
+        if options.required_error then
+            _self.errors:setMessage("required", options.required_error)
+        end
+
+        if options.literal_error then
+            _self.errors:setMessage("literal", options.literal_error)
+        end
     end
 
-    if options?.literal_error then
-        schema.errors:setMessage("literal", options?.literal_error)
-    end
-
-    return schema
+    return _self
 end
 
 ---Defines a default value.

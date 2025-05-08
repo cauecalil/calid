@@ -6,18 +6,8 @@ local CalidArray = requireC "lib.schemas.array"
 local CalidLiteral = requireC "lib.schemas.literal"
 local CalidEnum = requireC "lib.schemas.enum"
 
----@class CalidSchema
-
 ---@class CalidAPI
 local CalidAPI = {}
-CalidAPI.__index = CalidAPI ---@private
-
----Creates a new CalidAPI instance.
----@private
----@return CalidAPI
-function CalidAPI:new()
-    return setmetatable({ name = "calid" }, CalidAPI)
-end
 
 ---Creates a new CalidNumber schema instance.
 ---@param options? CalidNumberOptions
@@ -49,7 +39,7 @@ function CalidAPI:object(object, options)
 end
 
 ---Creates a new CalidArray schema instance.
----@param schema CalidSchema
+---@param schema CalidArraySchema
 ---@param options? CalidArrayOptions
 ---@return CalidArray
 function CalidAPI:array(schema, options)
@@ -72,4 +62,4 @@ function CalidAPI:enum(enum, options)
     return CalidEnum:new(enum, options)
 end
 
-return CalidAPI:new()
+return CalidAPI

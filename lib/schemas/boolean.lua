@@ -1,7 +1,7 @@
 local utils = requireC "lib.utils"
 local CalidErrors = requireC "lib.errors"
 
----@class CalidBoolean : CalidSchema
+---@class CalidBoolean
 ---@field type string
 ---@field validation table
 ---@field errors CalidErrors
@@ -14,22 +14,24 @@ CalidBoolean.__index = CalidBoolean ---@private
 ---@param options? CalidBooleanOptions
 ---@return CalidBoolean
 function CalidBoolean:new(options)
-    local schema = setmetatable({}, CalidBoolean)
+    local _self = setmetatable({}, CalidBoolean)
 
-    schema.type = "boolean"
-    schema.validation = {}
+    _self.type = "boolean"
+    _self.validation = {}
 
-    schema.errors = CalidErrors:new(schema.type)
+    _self.errors = CalidErrors:new(_self.type)
 
-    if options?.required_error then
-        schema.errors:setMessage("required", options?.required_error)
+    if options then
+        if options.required_error then
+            _self.errors:setMessage("required", options.required_error)
+        end
+
+        if options.type_error then
+            _self.errors:setMessage("type", options.type_error)
+        end
     end
 
-    if options?.type_error then
-        schema.errors:setMessage("type", options?.type_error)
-    end
-
-    return schema
+    return _self
 end
 
 ---Defines a default value.
